@@ -5,16 +5,16 @@ This app will allow users to create,view, edit and delete tasks in a to-do list 
 displaying weather information.
 
 ### Features
-🗒️ Add, edit, delete tasks with title and description.
-✅ Mark tasks as high priority via long press.
-🌤️ Weather card on top of task list using WeatherAPI.
-📍 Fetch weather automatically using current device location.
-🗂️ Bottom navigation bar to toggle between All Tasks and High Priority Tasks.
-💾 Local data persistence using SQLite (via sqflite package).
-📱 Responsive UI supporting different screen sizes and orientations.
-✅ Input validation and error handling for task fields.
-🎨 Floating Action Button (FAB) to add tasks.
-✏️ Snack messages for user feedback on actions (floating to avoid UI overlap).
+- 🗒️ Add, edit, delete tasks with title and description.
+- ✅ Mark tasks as high priority via long press.
+- 🌤️ Weather card on top of task list using WeatherAPI.
+- 📍 Fetch weather automatically using current device location.
+- 🗂️ Bottom navigation bar to toggle between All Tasks and High Priority Tasks.
+- 💾 Local data persistence using SQLite (via sqflite package).
+- 📱 Responsive UI supporting different screen sizes and orientations.
+- ✅ Input validation and error handling for task fields.
+- 🎨 Floating Action Button (FAB) to add tasks.
+- ✏️ Snack messages for user feedback on actions (floating to avoid UI overlap).
 
 ### Requirements:
 1.  Create a flutter project using dart.
