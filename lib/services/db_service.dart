@@ -29,22 +29,30 @@ class DBService {
     );
   }
 
-  Future<int> addTask(Task task) async {
+  /// Insert a new task
+  Future<void> insertTask(Task task) async {
     final dbClient = await db;
-    return await dbClient.insert('tasks', task.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await dbClient.insert(
+      'tasks',
+      task.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
+  /// Get all tasks
   Future<List<Task>> getTasks() async {
     final dbClient = await db;
     final List<Map<String, dynamic>> maps = await dbClient.query('tasks');
     return List.generate(maps.length, (i) => Task.fromMap(maps[i]));
   }
 
+  /// Update a task
   Future<int> updateTask(Task task) async {
     final dbClient = await db;
     return await dbClient.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
   }
 
+  /// Delete a task
   Future<int> deleteTask(int id) async {
     final dbClient = await db;
     return await dbClient.delete('tasks', where: 'id = ?', whereArgs: [id]);
