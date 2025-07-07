@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../services/db_service.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TaskListScreen extends StatefulWidget {
   final Function(Task) onEdit;
-  final VoidCallback onAdd; // <-- Add this to handle Add button action
+  final VoidCallback onAdd;                             // <-- Add this to handle Add button action
 
   const TaskListScreen({super.key, required this.onEdit, required this.onAdd});
 
@@ -57,13 +58,14 @@ class _TaskListScreenState extends State<TaskListScreen> {
     }
   }
 
+  void shareTask(Task task){
+    Share.share("Task: ${task.title}\n Description: ${task.description}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("To-Do List"),
-      ),
+      appBar: AppBar(title: const Text("To-Do List")),
       body: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
@@ -71,9 +73,16 @@ class _TaskListScreenState extends State<TaskListScreen> {
           return ListTile(
             title: Text(task.title),
             subtitle: Text(task.description),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
-              onPressed: () => deleteTask(task.id!),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(onPressed: () => shareTask(task),
+                  icon: const Icon(Icons.share, color: Colors.blue),
+                ),
+                IconButton(onPressed: () => deleteTask(task.id!),
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                ),
+              ],
             ),
             onTap: () => widget.onEdit(task),
             onLongPress: () => toggleHighPriority(task),
@@ -81,7 +90,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: widget.onAdd, // You’ll define this callback from parent
+        onPressed: widget.onAdd,                                  // You’ll define this callback from parent
         child: const Icon(Icons.add),
       ),
     );
