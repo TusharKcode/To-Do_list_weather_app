@@ -8,7 +8,8 @@ import 'package:to_do_list_weather_app/models/task.dart';
 import 'add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final VoidCallback onToggleTheme;
+  const HomeScreen({super.key, required this.onToggleTheme});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -68,7 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('To-Do Weather App')),
+      appBar: AppBar(
+          title: const Text('To-Do Weather App'),
+          actions: [
+            IconButton(onPressed: widget.onToggleTheme,
+                icon: const Icon(Icons.brightness_6))
+          ],
+      ),
       body: Column(
         children: [
           if (weatherData != null)
