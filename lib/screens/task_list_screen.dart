@@ -10,10 +10,10 @@ class TaskListScreen extends StatefulWidget {
   const TaskListScreen({super.key, required this.onEdit, required this.onAdd});
 
   @override
-  State<TaskListScreen> createState() => _TaskListScreenState();
+  TaskListScreenState createState() => TaskListScreenState();
 }
 
-class _TaskListScreenState extends State<TaskListScreen> {
+class TaskListScreenState extends State<TaskListScreen> {
   final DBService _dbService = DBService();
   List<Task> tasks = [];
 

@@ -4,7 +4,6 @@ import 'package:to_do_list_weather_app/services/weather_service.dart';
 import 'package:to_do_list_weather_app/screens/task_list_screen.dart';
 import 'package:to_do_list_weather_app/screens/high_priority_screen.dart';
 import 'package:to_do_list_weather_app/models/task.dart';
-
 import 'add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic>? weatherData;
 
   final WeatherService _weatherService = WeatherService();
+
+  final GlobalKey<TaskListScreenState> _taskListKey = GlobalKey<TaskListScreenState>();
 
   @override
   void initState() {
@@ -41,30 +42,25 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (updated == true) {
-      setState(() {}); // Refresh UI after edit
+      _taskListKey.currentState?.loadTasks();
     }
   }
 
-
-  void onAddTask() {
-    showDialog(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: const Text('Add Task'),
-            content: const Text('Implement add task screen or dialog here!'),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(context),
-                  child: const Text('Close')),
-            ],
-          ),
+  void onAddTask() async{
+    bool? added = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddTaskScreen()),
     );
+
+    if (added == true) {
+      _taskListKey.currentState?.loadTasks();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      TaskListScreen(onEdit: onEditTask, onAdd: onAddTask),
+      TaskListScreen(key: _taskListKey, onEdit: onEditTask, onAdd: onAddTask),
       HighPriorityScreen(onEdit: onEditTask),
     ];
 
@@ -98,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,  // Active icon & label color
-        unselectedItemColor: Colors.grey,      // Inactive icon & label color
-        backgroundColor: Colors.lightGreenAccent,         // Nav bar background color
+        selectedItemColor: Colors.white60,  // Active icon & label color
+        unselectedItemColor: Colors.white,      // Inactive icon & label color
+        backgroundColor: Colors.blue,         // Nav bar background color
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Tasks'),
           BottomNavigationBarItem(icon: Icon(Icons.priority_high), label: 'High Priority'),
@@ -112,16 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          bool? added = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddTaskScreen()),
-          );
-
-          if (added == true) {
-            setState(() {});
-          }
-        },
+        onPressed: onAddTask,
         child: const Icon(Icons.add),
       ),
     );
