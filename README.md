@@ -1,8 +1,9 @@
-Building a simple To-Do list app with weather information using flutter.
+**Building a simple To-Do list app with weather information using flutter.**
 
 The goal of this assignment is to evaluate the candidates ability to develop a basic flutter app.
-This app will allow users to create,view, edit and delete tasks in a to-do list along with 
+This app will allow users to create,view, edit and delete tasks in a to-do list along with
 displaying weather information.
+
 ---
 
 ### Features
